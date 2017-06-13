@@ -5,8 +5,8 @@
 #include <libusb.h>
 #include "transferPacket.h"
 
-#define DEBUG_USB_PRINT
-#define DEBUG_LIBUSB_PRINT
+//#define DEBUG_USB_PRINT
+//#define DEBUG_LIBUSB_PRINT
 
 namespace EasySoftUsb
 {
