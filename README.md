@@ -35,7 +35,7 @@ Make produces so library file in following template libEasyUsb.so.VERSION,  if y
 
 3. We should include (header file location) -I/usr/include/libusb-1.0/ -I/usr/include/libEasyUsb/
 
-# Synchronous and Asynchronous example
+# Synchronous and Asynchronous examples
 
 Synchronous operations blocks execution until operation is not complete or timeout is expired, in async way we done 
 first version almost the same (data wait is implemented in library Write and Read operation, in 1.1 it WILL BE implemented smarter logic. last param in UsbTransceiver construction related with usage sync or async lib usb API. I discovered that sometimes async API works better for same purposes (don't know why).
@@ -58,8 +58,25 @@ interfaces - static std::vector<unsigned char> interfaces = {0, 1, 2, 3, 4}; vec
       for(std::vector<EasySoftUsb::TransferPacket>::iterator it = firmware.begin(); it != firmware.end(); it++)
             _transceiver->Write(*it);
 `
-Here we form vector of bytes from firmware image, transfer packet forms in following manner:
+Here we form vector of bytes from firmware image, transfer packet forms in following manner (example is out of context):
+`
 
+    EasySoftUsb::TransferPacket packet;
+    packet._timeout = -1;
+    packet._transferType = EasySoftUsb::TransferType::Control;
+    // Data
+    if(type == 0x00)
+    {
+        packet._data.assign(buffer.begin(), buffer.end());
+        packet._controlInfo._wValue = address;
+        packet._controlInfo._wIndex = upperAddress;
+        packet._controlInfo._bRequest = FIRMWARE_LOAD_REQUEST;
+        packet._controlInfo._bmRequestType = COMMAND_REQUEST_TYPE;
+        _buffer.push_back(packet);
+    }
+
+`
+each packet has transfer type (1 of 4 USB transfer types: bulk, control, e.t.c), also every packet could have it own timeout
 
 3. Read data from device
 `
@@ -68,4 +85,20 @@ Here we form vector of bytes from firmware image, transfer packet forms in follo
         EasySoftUsb::TransferPacket packet = EepromHelper::GetReadRequest();
         _transceiver->Read(packet, bytesRead);
         return packet._data;
+`
+data read is also uses Transfer Packet which describes read data
+
+`
+
+    EasySoftUsb::TransferPacket EepromHelper :: GetReadRequest()
+    {
+        EasySoftUsb::TransferPacket packet;
+        packet._transferType = EasySoftUsb::TransferType::Control;
+        packet._controlInfo._bmRequestType = DATA_REQUEST_TYPE;
+        packet._controlInfo._bRequest = EEPROM_READ_REQUEST;
+        packet._controlInfo._wIndex = 0;
+        packet._controlInfo._wValue = 0;
+        packet._data.resize(EEPROM_SIZE);
+        return packet;
+    }
 `
