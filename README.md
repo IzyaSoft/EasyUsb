@@ -34,3 +34,38 @@ Make produces so library file in following template libEasyUsb.so.VERSION,  if y
 2. We should link both 2 libs (libusb and libEasyUsb) -lusb-1.0 -lEasyUsb
 
 3. We should include (header file location) -I/usr/include/libusb-1.0/ -I/usr/include/libEasyUsb/
+
+# Synchronous and Asynchronous example
+
+Synchronous operations blocks execution until operation is not complete or timeout is expired, in async way we done 
+first version almost the same (data wait is implemented in library Write and Read operation, in 1.1 it WILL BE implemented smarter logic. last param in UsbTransceiver construction related with usage sync or async lib usb API. I discovered that sometimes async API works better for same purposes (don't know why).
+
+1. init device instance
+
+`
+    _transceiver = std::shared_ptr<EasySoftUsb::UsbTransceiver>(new EasySoftUsb::UsbTransceiver(_vendorId, _productId,               
+                                                                                                interfaces, 1));
+`
+
+interfaces - static std::vector<unsigned char> interfaces = {0, 1, 2, 3, 4}; vector of available device Usb interfaces
+ 
+2. Write data to device
+
+  `
+  
+      std::vector<EasySoftUsb::TransferPacket> firmware = EasyUsrp::ImageLoader::GetFirmwareLoader().Load(firmareFile);
+      
+      for(std::vector<EasySoftUsb::TransferPacket>::iterator it = firmware.begin(); it != firmware.end(); it++)
+            _transceiver->Write(*it);
+`
+Here we form vector of bytes from firmware image, transfer packet forms in following manner:
+
+
+3. Read data from device
+`
+
+        int bytesRead = 0;
+        EasySoftUsb::TransferPacket packet = EepromHelper::GetReadRequest();
+        _transceiver->Read(packet, bytesRead);
+        return packet._data;
+`
