@@ -1,0 +1,5 @@
+#ifndef SRC_TRANSFERRESULT_H_
+#define SRC_TRANSFERRESULT_H_
+
+
+#endif

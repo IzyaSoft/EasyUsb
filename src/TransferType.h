@@ -1,5 +1,5 @@
-#ifndef SRC_TRANSCEIVERS_CONFIG_TRANSFERTYPE_H_
-#define SRC_TRANSCEIVERS_CONFIG_TRANSFERTYPE_H_
+#ifndef SRC_TRANSFERTYPE_H_
+#define SRC_TRANSFERTYPE_H_
 
 namespace EasySoftUsb
 {
@@ -12,4 +12,4 @@ namespace EasySoftUsb
     };
 }
 
-#endif /* SRC_TRANSCEIVERS_CONFIG_TRANSFERTYPE_H_ */
+#endif /* SRC_TRANSFERTYPE_H_ */

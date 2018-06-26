@@ -1,5 +1,5 @@
-#ifndef Transceivers_USBTransceiver_H_
-#define Transceivers_USBTransceiver_H_
+#ifndef SRC_USBTRANSCEIVER_H_
+#define SRC_USBTRANSCEIVER_H_
 
 #include <vector>
 #include <libusb.h>
@@ -58,4 +58,4 @@ namespace EasySoftUsb
     };
 }
 
-#endif /* Transceivers_USBTransceiver_H_ */
+#endif /* SRC_USBTRANSCEIVER_H_ */
