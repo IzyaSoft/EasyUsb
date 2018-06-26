@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <libusb.h>
-#include "transferPacket.h"
+
+#include "TransferPacket.h"
 
 //#define DEBUG_USB_PRINT
 //#define DEBUG_LIBUSB_PRINT

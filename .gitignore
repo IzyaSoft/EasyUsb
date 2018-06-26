@@ -34,3 +34,4 @@
 #Debug and Release output dirs
 Debug/*
 Release/*
+/Debug/

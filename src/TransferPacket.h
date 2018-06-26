@@ -1,5 +1,5 @@
-#ifndef SRC_DATA_USB_TRANSFERPACKET_H_
-#define SRC_DATA_USB_TRANSFERPACKET_H_
+#ifndef SRC_TRANSFERPACKET_H_
+#define SRC_TRANSFERPACKET_H_
 
 #include <vector>
 #include "UsbControlTransferInfo.h"
