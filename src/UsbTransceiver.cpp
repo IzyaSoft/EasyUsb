@@ -276,7 +276,7 @@ namespace EasySoftUsb
             handleResult = transfer->status == LIBUSB_TRANSFER_COMPLETED || !result;
             if(!handleResult)  // todo: umv: Check Display Error function is proper
             {
-                std::cout << "Error occured, code: " << transfer->status << ", related to ";
+                std::cout << "Error occurred, code: " << transfer->status << ", related to ";
                 DisplayError(result);
             }
             else break;
