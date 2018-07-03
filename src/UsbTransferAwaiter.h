@@ -7,6 +7,7 @@
 
 namespace EasySoftUsb
 {
+    // make static or not ?s
     class UsbTransferAwaiter
     {
     public:
